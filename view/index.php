@@ -8,23 +8,27 @@ function is_logged_in(){
 };
 
 if($_GET['p'] == "upload" && is_logged_in() == true){
-    include("../model/php/upload_pictures.php");
     include("../model/php/header.php");
     include("../model/php/navigation.php");
+    include("../model/php/upload_pictures.php");
     include("../model/php/footer.php");
     echo "upload";
 }elseif($_GET['p'] == "photos" && is_logged_in() == true){
-    include("../model/php/display_pictures.php");
     include("../model/php/header.php");
     include("../model/php/navigation.php");
+    include("../model/php/display_pictures.php");
     include("../model/php/footer.php");
     echo "photos";
-}
-else{
-    include("../model/php/login_page.php");
+}elseif ($_GET['p'] == "inscription") {
     include("../model/php/header.php");
     include("../model/php/navigation.php");
+    include("../model/php/inscription.php");
     include("../model/php/footer.php");
-    echo "login page";
+    echo "inscription";
+}else{
+    include("../model/php/header.php");
+    include("../model/php/navigation.php");
+    include("../model/php/login_page.php");
+    include("../model/php/footer.php");
 }
 ?>
