@@ -1,0 +1,29 @@
+{
+  "name": "PicTemp",
+  "version": "0.0.0",
+  "description": "A image-based temporary image sharing social website",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "express": "^4.13.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/N07070/PicTemp"
+  },
+  "keywords": [
+    "social",
+    "image",
+    "sharing",
+    "pictures"
+  ],
+  "author": "N07070",
+  "license": "GPL v3",
+  "bugs": {
+    "url": "https://github.com/N07070/PicTemp/issues"
+  }
+}
