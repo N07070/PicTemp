@@ -1,5 +1,10 @@
 <script>
-get_image_from_server();
+// alerts "Hey" every second
+var i = 0;
+setInterval(function(){
+    main(i);
+    i++;
+}, 10000);
 </script>
 <div class="result">
     <img src="">
