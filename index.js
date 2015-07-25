@@ -12,3 +12,7 @@ app.get("/", function(request, response){ //root dir
 });
 
 app.listen(port, host);
+
+
+// A web server
+When a user comes in, send the page 

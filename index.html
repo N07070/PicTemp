@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="/node_modules/material-design-lite/material.min.css">
+        <script src="/node_modules/material-design-lite/material.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+        <!-- Simple header with fixed tabs. -->
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+                    mdl-layout--fixed-tabs">
+          <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">Pic Temp</span>
+            </div>
+            <!-- Tabs -->
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                 <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Galerie</a>
+                <a href="#fixed-tab-2" class="mdl-layout__tab">Upload</a>
+            </div>
+          </header>
+          <div class="mdl-layout__drawer">
+              <span class="mdl-layout-title">Title</span>
+              <div class="mdl-layout__content">
+                  Where are my tabs ??
+              </div>
+          </div>
+          <main class="mdl-layout__content">
+            <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+                <div class="page-content">
+                    Here will be the image in the center of the page with the time left.
+                    <!-- Image card -->
+                    <style>
+                      .demo-card-image.mdl-card {
+                        width: 256px;
+                        height: 256px;
+                        background: url('assets/img/image_card.jpg') center / cover;
+                      }
+                      .demo-card-image > .mdl-card__actions {
+                        height: 52px;
+                        padding: 16px;
+                        background: rgba(0, 0, 0, 0.2);
+                      }
+                      .demo-card-image__filename {
+                        color: #fff;
+                        font-size: 14px;
+                        font-weight: 500;
+                      }
+                    </style>
+
+                    <div class="mdl-card mdl-shadow--2dp demo-card-image">
+                      <div class="mdl-card__title mdl-card--expand"></div>
+                      <div class="mdl-card__actions">
+                        <span class="demo-card-image__filename">Image.jpg</span>
+                      </div>
+                    </div>
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+                <div class="page-content">
+                    Here will be the upload form
+                </div>
+            </section>
+          </main>
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
