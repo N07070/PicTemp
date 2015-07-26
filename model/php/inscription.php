@@ -30,6 +30,7 @@ function inscription_form(){
 function register_user(){
     // Verify user input
     if (!empty($_POST['inputEmail']) && !empty($_POST['inputUsername']) && !empty($_POST['inputPassword']) &&!empty($_POST['inputPassword2'])){
+        // Connect to database
         // Check if the user is not already logged in
         // Check if the username is valid
         // Check if the two passwords are the same
