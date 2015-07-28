@@ -1,5 +1,12 @@
 {
-  "dependencies": {
+"name": "PicTemp",
+"repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/N07070/PicTemp.git"
+  },
+"description": "A open-source social and temporary picture sharing website rocking NodeJS.",
+"author": "N07070", 
+"dependencies": {
     "express": "3.9",
     "ejs": "latest",
     "uid2": "latest",
