@@ -4,7 +4,7 @@ function inscription_form($error_message){
 
     <div class="container">
 
-          <form class="form-signin" action="/?p=inscription">
+          <form class="form-signin" action="/hello?p">
             <h2 class="form-signin-heading">Inscrivez-vous</h2>
             <?php if (!empty($error_message)): ?>
                 <div class="alert alert-danger" role="alert"> <?php echo($error_message)?> </div>

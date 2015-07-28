@@ -13,7 +13,7 @@ function is_logged_in(){
     }
 };
 
-if($_GET['p'] == "upload"  && is_logged_in() == true){
+if($_GET['p'] == "upload"  /*&& is_logged_in() == true*/){
     // Upload pictures
     include("../model/php/header.php");
     include("../model/php/navigation.php");

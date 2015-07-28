@@ -1,11 +1,31 @@
 <?php
 function form_image(){
     ?>
-    <form action="/?p=upload" method="post">
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="hidden" name="MAX_FILE_SIZE" value="12345">
-        <input type="submit" value="Uploader">
-    </form>
+    <input type="file" accept="image/*" capture>
+    <canvas></canvas>
+    <script>
+    function drawOnCanvas(file) {
+  var reader = new FileReader();
+
+  reader.onload = function (e) {
+    var dataURL = e.target.result,
+        c = document.querySelector('canvas'), // see Example 4
+        ctx = c.getContext('2d'),
+        img = new Image();
+
+    img.onload = function() {
+      c.width = img.width;
+      c.height = img.height;
+      ctx.drawImage(img, 0, 0);
+    };
+
+    img.src = dataURL;
+  };
+
+  reader.readAsDataURL(file);
+}
+    </script>
+    <img>
     <?php
 }
 
