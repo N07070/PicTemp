@@ -1,0 +1,64 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>N07070's photo app</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="assets/css/normalize.min.css">
+        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+        <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+        <script src="assets/carousel.js"></script>
+    </head>
+      <body ng-app="carousel">
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">N07070's photo app</a>
+              </div>
+              <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="/">Home</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+          </nav>
+        <main>
+          <!--ul ng-controller="ImagesCtrl as test">
+            <li ng-repeat="image in test.images">
+              <div>
+                <img style="height:200px; width: auto; clear:both;" ng-src="http://localhost:3000/images/{{image.filename}}">
+              </div>
+            </li>
+          </ul-->
+              <div class="image-border" ng-controller="ImagesCtrl as test">
+                <img class="img-responsive image-display" src="images/{{test.image.filename}}">
+              </div>
+          <!--  Make a bar that stays at the bottom of the page.-->
+          <section id="upload">
+                <p>
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <label for="file">Select an image:</label>
+                        <input class="btn btn-primary" type="file" name="file" id="file" />
+                        <button class="btn btn-primary"type="submit">Upload</button>
+                    </form>
+                </p>
+          </section>
+        </main>
+      </body>
+    </html>
