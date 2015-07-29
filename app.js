@@ -28,9 +28,9 @@ var users = [
   , { id: 2, username: 'jane', password: 'jane123' } // Hash passwords !
 ];
 
-function verify_user_input(verify_email,verify_username,verify_password1,verify_password2,verify_age){
+function verify_user_input(verify_email , verify_username , verify_password1 , verify_password2 , verify_age ){
 
-    if (/*validator.isEmail(verify_email) &&*/ validator.isAlphanumeric(verify_username) && validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99}) ) {
+    if (validator.isEmail(verify_email) /* && validator.isAlphanumeric(verify_username) && validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99})*/ ) {
         return true;
     }
     else {
@@ -42,19 +42,26 @@ function verify_user_input(verify_email,verify_username,verify_password1,verify_
 function register_new_user(req,res){
     //verify user input.
     var email = req.body.user_username; // check that it is a valid email
-    var username = req.body.user_email; // check that it's a usermane that's alphanumerical
+    var username = req.body.user_email; // check that it's a username that's alphanumerical
     var password_1 = req.body.user_password; // check that both passwords are equal and then hash the shit out of them.
     var password_2 = req.body.user_password_confirmation;
-    var age = req.body.user_age; // be sure it's a number between 13 and 99 ( assuming you're dead by then, or not on internet tho. )
+    var age = validator.toInt(req.body.user_age); // be sure it's a number between 13 and 99 ( assuming you're dead by then, or not on internet tho. )
 
-    if (verify_user_input(email,username,password_1,password_2,age)) {
+    console.log("\n" + email + "\n" + username + "\n" + password_1  + "\n" + password_2 + "\n" + age);
+
+    if (verify_user_input(email,username,password_1,password_2,age) === false) {
 
         // Hash password using bcrypt
         password_1 =  bcrypt.genSalt(10, function(err, salt){
             bcrypt.hash(password_1, salt, function(err, hash){
-                return hash;
+                if (err) {
+                    console.log(err);
+                }else {
+                    return hash;
+                }
             });
         });
+        console.log(password_1);
         console.log("All good in the hood !");
         // // connect to the mysql database.
         // var connection = mysql.createConnection({
@@ -89,7 +96,7 @@ function register_new_user(req,res){
         //     console.log(res);
         // });
     }else {
-        console.error("The user has not entered proper informations.");
+        console.log("\n\nThe user has not entered proper informations.\n\n");
     }
 }
 
@@ -254,8 +261,8 @@ app.get('/register', function(req, res){
     res.render('register');
 })
 
-app.post('/register', function(req, res, register_new_user){
-    res.register_new_user();
+app.post('/register', function(req, res){
+    register_new_user(req);
     res.redirect('/');
 })
 
