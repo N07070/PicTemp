@@ -18,7 +18,8 @@ var passport = require('passport')
 var flash = require('connect-flash')
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
-var moment = require('moment');;
+var moment = require('moment');
+var validator = require('node-validator');
 
 // Change this to a database to be able to add users
 var users = [
@@ -28,9 +29,13 @@ var users = [
 
 function verify_user_input(verify_email,verify_username,verify_password1,verify_password2,verify_age){
 
-    
+    if (validator.isEmail(verify_email) && validator.isAlphanumeric(verify_username) && validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99}) ) {
+        return true;
+    }
+    else {
+        return false;
+    }
 
-    return true;
 }
 
 function register_new_user(req,res){
@@ -43,38 +48,41 @@ function register_new_user(req,res){
 
     if (verify_user_input(email,username,password_1,password_2,age)) {
 
-        // connect to the mysql database.
-        var connection = mysql.createConnection({
-            host: "localhost",
-            user: "derp",
-            password: "derp",
-            database: "pic_temp_users"
-        });
-
-        // Create a new connection to it
-        connection.connect();
-
-        // Insert new user.
-        var new_user = {
-            user_id: null, // mySQL will take care of that
-            user_email: email,
-            user_username: username,
-            user_password: password,
-            user_age: age,
-            user_creation_date: moment().format('yyyy-mm-dd:hh:mm:ss'), // so we know how old our users are.
-            user_is_moderator: false, // well, you're not.
-            user_subscribed_flows: "default", // only the principal one, let the user add more later.
-            user_moderator_of: null,
-            user_is_admin: false,
-            user_is_premium: false
-        };
-
-        var query = connection.query('inser into articles set ?', new_user, function (err, res){
-            if (err){
-                console.log(err);
-            }
-            console.log(res);
-        });
+        console.log("All good in the hood !");
+        // // connect to the mysql database.
+        // var connection = mysql.createConnection({
+        //     host: "localhost",
+        //     user: "derp",
+        //     password: "derp",
+        //     database: "pic_temp_users"
+        // });
+        //
+        // // Create a new connection to it
+        // connection.connect();
+        //
+        // // Insert new user.
+        // var new_user = {
+        //     user_id: null, // mySQL will take care of that
+        //     user_email: email,
+        //     user_username: username,
+        //     user_password: password,
+        //     user_age: age,
+        //     user_creation_date: moment().format('yyyy-mm-dd:hh:mm:ss'), // so we know how old our users are.
+        //     user_is_moderator: false, // well, you're not.
+        //     user_subscribed_flows: "default", // only the principal one, let the user add more later.
+        //     user_moderator_of: null,
+        //     user_is_admin: false,
+        //     user_is_premium: false
+        // };
+        //
+        // var query = connection.query('inser into articles set ?', new_user, function (err, res){
+        //     if (err){
+        //         console.log(err);
+        //     }
+        //     console.log(res);
+        // });
+    }else {
+        console.error("The user has not entered proper informations.");
     }
 }
 
