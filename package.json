@@ -7,6 +7,7 @@
   "description": "A open-source social and temporary picture sharing website rocking NodeJS.",
   "author": "N07070",
   "dependencies": {
+    "bcrypt": "^0.8.4",
     "body-parser": "latest",
     "connect-flash": "^0.1.1",
     "ejs": "latest",

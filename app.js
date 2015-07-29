@@ -47,7 +47,7 @@ function register_new_user(req,res){
     var age = req.body.user_age; // be sure it's a number between 13 and 99 ( assuming you're dead by then, or not on internet tho. )
 
     if (verify_user_input(email,username,password_1,password_2,age)) {
-
+        password_1 = 
         console.log("All good in the hood !");
         // // connect to the mysql database.
         // var connection = mysql.createConnection({
