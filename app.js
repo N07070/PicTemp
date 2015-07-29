@@ -17,12 +17,41 @@ var server = require('http').createServer(app);
 var passport = require('passport')
 var flash = require('connect-flash')
 var LocalStrategy = require('passport-local').Strategy;
+var mysql = require('mysql');
 
 // Change this to a database to be able to add users
 var users = [
     { id: 1, username: 'john', password: 'john123' } // Hash passwords !
   , { id: 2, username: 'jane', password: 'jane123' } // Hash passwords !
 ];
+
+function register_new_user(username,email,password,age){
+    // connect to the mysql database.
+    var connection = mysql.createConnection({
+        host: "localhost",
+        user: "derp",
+        password: "derp",
+        database: "pic_temp_users"
+    });
+
+    // Create a new connection to it
+    connection.connect();
+
+    // Insert new user.
+
+    var new_user = {
+        user_id: null,
+        user_email: username,
+        user_password: password,
+        user_age: age,
+        user_creation_date: 
+
+    }
+    console.log(req.body.user_username);
+    console.log(req.body.user_email);
+    console.log(req.body.user_password);
+    console.log(req.body.user_password_confirmation);
+}
 
 function findById(id, fn) {
   var idx = id - 1;
@@ -186,6 +215,7 @@ app.get('/register', function(req, res){
 })
 
 app.post('/register', function(req, res){
+    register_new_user(req,res);
     res.redirect('/');
 })
 
