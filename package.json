@@ -8,11 +8,15 @@
   "author": "N07070",
   "dependencies": {
     "body-parser": "latest",
+    "connect-flash": "^0.1.1",
     "ejs": "latest",
     "express": "3.9",
     "mime": "latest",
     "moment": "^2.10.6",
+    "mysql": "^2.8.0",
     "node-validator": "^0.1.13",
+    "passport": "^0.2.2",
+    "passport-local": "^1.0.0",
     "uid2": "latest",
     "walk": "latest"
   }
