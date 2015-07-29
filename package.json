@@ -1,17 +1,18 @@
 {
-"name": "PicTemp",
-"repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/N07070/PicTemp.git"
+  "name": "PicTemp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/N07070/PicTemp.git"
   },
-"description": "A open-source social and temporary picture sharing website rocking NodeJS.",
-"author": "N07070", 
-"dependencies": {
-    "express": "3.9",
-    "ejs": "latest",
-    "uid2": "latest",
-    "mime": "latest",
+  "description": "A open-source social and temporary picture sharing website rocking NodeJS.",
+  "author": "N07070",
+  "dependencies": {
     "body-parser": "latest",
+    "ejs": "latest",
+    "express": "3.9",
+    "mime": "latest",
+    "node-validator": "^0.1.13",
+    "uid2": "latest",
     "walk": "latest"
   }
 }

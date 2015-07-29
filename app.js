@@ -18,6 +18,7 @@ var passport = require('passport')
 var flash = require('connect-flash')
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
+var moment = require('moment');;
 
 // Change this to a database to be able to add users
 var users = [
@@ -25,32 +26,56 @@ var users = [
   , { id: 2, username: 'jane', password: 'jane123' } // Hash passwords !
 ];
 
-function register_new_user(username,email,password,age){
-    // connect to the mysql database.
-    var connection = mysql.createConnection({
-        host: "localhost",
-        user: "derp",
-        password: "derp",
-        database: "pic_temp_users"
-    });
+function verify_user_input(verify_email,verify_username,verify_password1,verify_password2,verify_age){
 
-    // Create a new connection to it
-    connection.connect();
+    
 
-    // Insert new user.
+    return true;
+}
 
-    var new_user = {
-        user_id: null,
-        user_email: username,
-        user_password: password,
-        user_age: age,
-        user_creation_date: 
+function register_new_user(req,res){
+    //verify user input.
+    var email = req.body.user_username; // check that it is a valid email
+    var username = req.body.user_email; // check that it's a usermane that's alphanumerical
+    var password_1 = req.body.user_password; // check that both passwords are equal and then hash the shit out of them.
+    var password_2 = req.body.user_password_confirmation;
+    var age = req.body.user_age; // be sure it's a number between 13 and 99 ( assuming you're dead by then, or not on internet tho. )
 
+    if (verify_user_input(email,username,password_1,password_2,age)) {
+
+        // connect to the mysql database.
+        var connection = mysql.createConnection({
+            host: "localhost",
+            user: "derp",
+            password: "derp",
+            database: "pic_temp_users"
+        });
+
+        // Create a new connection to it
+        connection.connect();
+
+        // Insert new user.
+        var new_user = {
+            user_id: null, // mySQL will take care of that
+            user_email: email,
+            user_username: username,
+            user_password: password,
+            user_age: age,
+            user_creation_date: moment().format('yyyy-mm-dd:hh:mm:ss'), // so we know how old our users are.
+            user_is_moderator: false, // well, you're not.
+            user_subscribed_flows: "default", // only the principal one, let the user add more later.
+            user_moderator_of: null,
+            user_is_admin: false,
+            user_is_premium: false
+        };
+
+        var query = connection.query('inser into articles set ?', new_user, function (err, res){
+            if (err){
+                console.log(err);
+            }
+            console.log(res);
+        });
     }
-    console.log(req.body.user_username);
-    console.log(req.body.user_email);
-    console.log(req.body.user_password);
-    console.log(req.body.user_password_confirmation);
 }
 
 function findById(id, fn) {
