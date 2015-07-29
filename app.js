@@ -19,7 +19,8 @@ var flash = require('connect-flash')
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('mysql');
 var moment = require('moment');
-var validator = require('node-validator');
+var validator = require('validator');
+var bcrypt = require('bcrypt');
 
 // Change this to a database to be able to add users
 var users = [
@@ -29,7 +30,7 @@ var users = [
 
 function verify_user_input(verify_email,verify_username,verify_password1,verify_password2,verify_age){
 
-    if (validator.isEmail(verify_email) && validator.isAlphanumeric(verify_username) && validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99}) ) {
+    if (/*validator.isEmail(verify_email) &&*/ validator.isAlphanumeric(verify_username) && validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99}) ) {
         return true;
     }
     else {
@@ -47,7 +48,13 @@ function register_new_user(req,res){
     var age = req.body.user_age; // be sure it's a number between 13 and 99 ( assuming you're dead by then, or not on internet tho. )
 
     if (verify_user_input(email,username,password_1,password_2,age)) {
-        password_1 = 
+
+        // Hash password using bcrypt
+        password_1 =  bcrypt.genSalt(10, function(err, salt){
+            bcrypt.hash(password_1, salt, function(err, hash){
+                return hash;
+            });
+        });
         console.log("All good in the hood !");
         // // connect to the mysql database.
         // var connection = mysql.createConnection({
@@ -247,8 +254,8 @@ app.get('/register', function(req, res){
     res.render('register');
 })
 
-app.post('/register', function(req, res){
-    register_new_user(req,res);
+app.post('/register', function(req, res, register_new_user){
+    res.register_new_user();
     res.redirect('/');
 })
 
