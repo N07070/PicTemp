@@ -30,13 +30,13 @@ var users = [
 
 function verify_user_input(verify_email , verify_username , verify_password1 , verify_password2 , verify_age ){
 
-    if (validator.isEmail(verify_email) && validator.isAlphanumeric(verify_username) && validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99}) ) {
+    if (/*validator.isEmail(verify_email) &&*/ validator.isAlphanumeric(verify_username) /*&& validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99})*/ ) {
         return true;
     }
     else {
         return false;
     }
-    
+
 }
 
 function register_new_user(req,res){
