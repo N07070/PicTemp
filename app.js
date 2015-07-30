@@ -77,12 +77,12 @@ function register_new_user(req,res){
 
         // Insert new user.
         var new_user = {
-            user_id: null, // mySQL will take care of that
+            user_id: null, // mySQL will take care of that and John. Poor John. He didn't know better. /s
             user_email: email,
             user_username: username,
             user_password: password_1,
             user_age: age,
-            user_creation_date: moment().format('yyyy-mm-dd:hh:mm:ss'), // so we know how old our users are.
+            user_creation_date: moment().format(), // so we know how old our users are.
             user_is_moderator: false, // well, you're not.
             user_subscribed_flows: "default", // only the principal one, let the user add more later.
             user_moderator_of: null,
@@ -92,7 +92,7 @@ function register_new_user(req,res){
 
         var query = connection.query('insert into pic_temp_users set ?', new_user, function (err, res){
             if (err){
-                console.log(err);
+                console.error(err);
             }
             console.log(res);
         });
