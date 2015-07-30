@@ -18,6 +18,7 @@
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "uid2": "latest",
+    "validator": "^3.43.0",
     "walk": "latest"
   }
 }

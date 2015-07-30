@@ -30,6 +30,8 @@ var users = [
 
 function verify_user_input(verify_email , verify_username , verify_password1 , verify_password2 , verify_age ){
 
+    console.log("\n" + verify_email + "\n" + verify_username + "\n" + verify_password1 + "\n" + verify_password2 + "\n" + verify_age);
+
     if (validator.isEmail(verify_email)){
         if (validator.isAlpha(verify_username) == true || validator.isAlphanumeric(verify_username) == true || validator.isInt(verify_username) == true ) {
             if (validator.equals(verify_password1,verify_password2)) {
@@ -42,7 +44,7 @@ function verify_user_input(verify_email , verify_username , verify_password1 , v
                 console.log("Both passwords do not match.");
             }
         }else {
-            console.log("The username it not valid.");
+            console.log("The username is not valid.");
         }
     }else {
         console.log("The email is invalid.");
@@ -51,60 +53,49 @@ function verify_user_input(verify_email , verify_username , verify_password1 , v
 
 function register_new_user(req,res){
     //verify user input.
-    var email = req.body.user_username; // check that it is a valid email
-    var username = req.body.user_email; // check that it's a username that's alphanumerical
+    var username = req.body.user_username; // check that it is a valid email
+    var email = req.body.user_email; // check that it's a username that's alphanumerical
     var password_1 = req.body.user_password; // check that both passwords are equal and then hash the shit out of them.
     var password_2 = req.body.user_password_confirmation;
     var age = validator.toInt(req.body.user_age); // be sure it's a number between 13 and 99 ( assuming you're dead by then, or not on internet tho. )
 
-    console.log("\n" + email + "\n" + username + "\n" + password_1  + "\n" + password_2 + "\n" + age);
-
     if (verify_user_input(email,username,password_1,password_2,age) === true) {
 
         // Hash password using bcrypt
-        password_1 =  bcrypt.genSalt(10, function(err, salt){
-            bcrypt.hash(password_1, salt, function(err, hash){
-                if (err) {
-                    console.log(err);
-                }else {
-                    return hash;
-                }
-            });
-        });
-        console.log(password_1);
+        password_1 = bcrypt.hashSync(password_1, 10);
         console.log("All good in the hood !");
-        // // connect to the mysql database.
-        // var connection = mysql.createConnection({
-        //     host: "localhost",
-        //     user: "derp",
-        //     password: "derp",
-        //     database: "pic_temp_users"
-        // });
-        //
-        // // Create a new connection to it
-        // connection.connect();
-        //
-        // // Insert new user.
-        // var new_user = {
-        //     user_id: null, // mySQL will take care of that
-        //     user_email: email,
-        //     user_username: username,
-        //     user_password: password,
-        //     user_age: age,
-        //     user_creation_date: moment().format('yyyy-mm-dd:hh:mm:ss'), // so we know how old our users are.
-        //     user_is_moderator: false, // well, you're not.
-        //     user_subscribed_flows: "default", // only the principal one, let the user add more later.
-        //     user_moderator_of: null,
-        //     user_is_admin: false,
-        //     user_is_premium: false
-        // };
-        //
-        // var query = connection.query('inser into articles set ?', new_user, function (err, res){
-        //     if (err){
-        //         console.log(err);
-        //     }
-        //     console.log(res);
-        // });
+        // connect to the mysql database.
+        var connection = mysql.createConnection({
+            host: "localhost",
+            user: "derp",
+            password: "derp",
+            database: "pic_temp"
+        });
+
+        // Create a new connection to it
+        connection.connect();
+
+        // Insert new user.
+        var new_user = {
+            user_id: null, // mySQL will take care of that
+            user_email: email,
+            user_username: username,
+            user_password: password_1,
+            user_age: age,
+            user_creation_date: moment().format('yyyy-mm-dd:hh:mm:ss'), // so we know how old our users are.
+            user_is_moderator: false, // well, you're not.
+            user_subscribed_flows: "default", // only the principal one, let the user add more later.
+            user_moderator_of: null,
+            user_is_admin: false,
+            user_is_premium: false
+        };
+
+        var query = connection.query('insert into pic_temp_users set ?', new_user, function (err, res){
+            if (err){
+                console.log(err);
+            }
+            console.log(res);
+        });
     }else {
         console.log("\n\nThe user has not entered proper informations.\n\n");
     }
@@ -142,11 +133,16 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy(
   function(username, password, done) {
     process.nextTick(function () {
-      findByUsername(username, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-        return done(null, user);
+        // Try to find a matching username.
+        findByUsername(username, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user || user.password != password) {
+                return done(null, false, { message: 'The username and password do not match. Sorry !'});
+            }else {
+                return done(null, user);
+            }
       })
     });
   }
@@ -281,7 +277,6 @@ app.get('/login/lost_password', function(req, res){
 })
 
 app.post('/login/lost_password', function(req,res){
-    console.log('Derp !');
     res.render('lost_password', {message: req.flash('Hey !')})
 })
 
