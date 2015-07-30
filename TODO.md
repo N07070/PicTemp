@@ -5,7 +5,9 @@
 * Finish the image insert in databse
 * Finish the image recuperation
 * Finish the task to check the age of the image + delete it
-* Finish the CSS
 * Find a way to display the error to the user in case something brakes.
 * Finish the integration of the picture camera in the website
-*
+* Convert Express to express 4.0
+* Change the secret string to a config file.
+* Change the login screen to a brief explanation of the webservice, and move the connection box right a bit.
+* Finish the CSS

@@ -30,8 +30,7 @@ var users = [
 
 function verify_user_input(verify_email , verify_username , verify_password1 , verify_password2 , verify_age ){
 
-    console.log("\n" + verify_email + "\n" + verify_username + "\n" + verify_password1 + "\n" + verify_password2 + "\n" + verify_age);
-
+    // With the validator module, check each user input.
     if (validator.isEmail(verify_email)){
         if (validator.isAlpha(verify_username) == true || validator.isAlphanumeric(verify_username) == true || validator.isInt(verify_username) == true ) {
             if (validator.equals(verify_password1,verify_password2)) {
@@ -96,28 +95,53 @@ function register_new_user(req,res){
             }
             console.log(res);
         });
+
+        connection.end(function(err) {
+            // The connection is terminated now
+            if (err) {
+                console.error(err);
+            }
+        });
+
     }else {
         console.log("\n\nThe user has not entered proper informations.\n\n");
     }
 }
 
+function find_user(user_email,password){
+    // Evaluate both users input
+
+    // Hash the password
+
+    // Connect to the database
+
+    // Try to find a table with the username and the password
+
+    // If it's okay, return true
+
+    // Otherwise, return false.
+}
+
 function findById(id, fn) {
-  var idx = id - 1;
-  if (users[idx]) {
-    fn(null, users[idx]);
-  } else {
-    fn(new Error('User ' + id + ' does not exist'));
-  }
+    var idx = id - 1;
+
+    // If there is a user with the id, then do something ?
+    if (users[idx]) {
+        fn(null, users[idx]); // OK
+    } else {
+        fn(new Error('User ' + id + ' does not exist')); // Nope
+    }
 }
 
 function findByUsername(username, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-    if (user.username === username) {
-      return fn(null, user);
+    // If there is a username with that username, then return something
+    for (var i = 0, len = users.length; i < len; i++) {
+        var user = users[i];
+        if (user.username === username) {
+            return fn(null, user);
+        }
     }
-  }
-  return fn(null, null);
+    return fn(null, null);
 }
 
 passport.serializeUser(function(user, done) {
@@ -156,7 +180,7 @@ app.set('view engine', 'html');
 app.configure(function() {
   app.use(express.logger());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: '1879JD1çud!&ç!éu&çJ1898S21JEi&çs&ésjç&ié&çàéà' })); // Change this to a config file. asdksjdalk
+  app.use(express.session({ secret: '1879JD1çud!&ç!éu& —}çÂJ18 Âê9Âê8 SÂ Â21 JEi  ÂÂ&çÂÂs&é sjç& ié&çàéà' })); // Change this to a config file. asdksjdalk
   app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
