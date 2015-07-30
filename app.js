@@ -49,7 +49,7 @@ function register_new_user(req,res){
 
     console.log("\n" + email + "\n" + username + "\n" + password_1  + "\n" + password_2 + "\n" + age);
 
-    if (verify_user_input(email,username,password_1,password_2,age) === false) {
+    if (verify_user_input(email,username,password_1,password_2,age) === true) {
 
         // Hash password using bcrypt
         password_1 =  bcrypt.genSalt(10, function(err, salt){
