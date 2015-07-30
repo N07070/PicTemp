@@ -110,16 +110,39 @@ function register_new_user(req,res){
 
 function find_user(user_email,password){
     // Evaluate both users input
-
-    // Hash the password
+    if (validator.isEmail(verify_email)){
+        password = validator.escape(password);
 
     // Connect to the database
+    var connection = mysql.createConnection({
+        host: "localhost",
+        user: "derp",
+        password: "derp",
+        database: "pic_temp"
+    });
 
-    // Try to find a table with the username and the password
+    // Create a new connection to it
+    connection.connect();
+
+    // Get the password from the row where there is the user's email.
+    connection.query("SELECT user_id,user_password,user_email FROM pic_temp_users WHERE user_email = " +  user_email, function(err, result) {
+        if (err) {
+            console.error(err);
+        }else {
+            var database_password = result;
+        }
+    });
 
     // If it's okay, return true
+    if (bcrypt.compareSync(password, database_password)){
+        return true
+    }
+
 
     // Otherwise, return false.
+    }else {
+        console.log("The user did not put in correct information.");
+    }
 }
 
 function findById(id, fn) {
@@ -149,7 +172,8 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  findById(id, function (err, user) {
+    findById(id, function (err, user) {
+        console.log(user);
     done(err, user);
   });
 });
@@ -165,6 +189,7 @@ passport.use(new LocalStrategy(
             if (!user || user.password != password) {
                 return done(null, false, { message: 'The username and password do not match. Sorry !'});
             }else {
+                console.log(user);
                 return done(null, user);
             }
       })
