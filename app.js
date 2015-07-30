@@ -113,33 +113,35 @@ function find_user(user_email,password){
     if (validator.isEmail(verify_email)){
         password = validator.escape(password);
 
-    // Connect to the database
-    var connection = mysql.createConnection({
-        host: "localhost",
-        user: "derp",
-        password: "derp",
-        database: "pic_temp"
-    });
+        // Connect to the database
+        var connection = mysql.createConnection({
+            host: "localhost",
+            user: "derp",
+            password: "derp",
+            database: "pic_temp"
+        });
 
-    // Create a new connection to it
-    connection.connect();
+        // Create a new connection to it
+        connection.connect();
 
-    // Get the password from the row where there is the user's email.
-    connection.query("SELECT user_id,user_password,user_email FROM pic_temp_users WHERE user_email = " +  user_email, function(err, result) {
-        if (err) {
-            console.error(err);
+        // Get the password from the row where there is the user's email.
+        var query = connection.query("SELECT user_id,user_password,user_email FROM pic_temp_users WHERE user_email = " +  connection.escape(user_email), function(err, result) {
+            if (err) {
+                console.error(err);
+            }else {
+                var database_password = result;
+            }
+        });
+
+        console.log(query);
+
+        // If it's okay, return true
+        if (bcrypt.compareSync(password, database_password)){
+            console.log('This user is A-okay !');
+            return true
         }else {
-            var database_password = result;
+            console.log("The user did not put in correct information.");
         }
-    });
-
-    // If it's okay, return true
-    if (bcrypt.compareSync(password, database_password)){
-        return true
-    }
-
-
-    // Otherwise, return false.
     }else {
         console.log("The user did not put in correct information.");
     }
@@ -302,9 +304,10 @@ app.get('/login', function(req, res){
 });
 
 app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  function(req, res) {
-    res.redirect('/');
+    passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+    function(req, res) {
+        find_user("hello@example.com","derp");
+        res.redirect('/');
 });
 
 app.get('/logout', function(req, res){
