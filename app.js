@@ -30,13 +30,23 @@ var users = [
 
 function verify_user_input(verify_email , verify_username , verify_password1 , verify_password2 , verify_age ){
 
-    if (/*validator.isEmail(verify_email) &&*/ validator.isAlphanumeric(verify_username) /*&& validator.equals(verify_password1,verify_password2) && validator.isInt(verify_age, { min : 13, max : 99})*/ ) {
-        return true;
+    if (validator.isEmail(verify_email)){
+        if (validator.isAlpha(verify_username) == true || validator.isAlphanumeric(verify_username) == true || validator.isInt(verify_username) == true ) {
+            if (validator.equals(verify_password1,verify_password2)) {
+                if (validator.isInt(verify_age, { min : 13, max : 99})) {
+                    return true;
+                } else {
+                    console.log('The user is too old or to young.');
+                }
+            } else {
+                console.log("Both passwords do not match.");
+            }
+        }else {
+            console.log("The username it not valid.");
+        }
+    }else {
+        console.log("The email is invalid.");
     }
-    else {
-        return false;
-    }
-
 }
 
 function register_new_user(req,res){
@@ -269,6 +279,12 @@ app.post('/register', function(req, res){
 app.get('/login/lost_password', function(req, res){
     res.render('lost_password');
 })
+
+app.post('/login/lost_password', function(req,res){
+    console.log('Derp !');
+    res.render('lost_password', {message: req.flash('Hey !')})
+})
+
 //Start the server
 server.listen(3000, function() {
   console.log("Express server up and running.");
