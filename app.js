@@ -36,7 +36,7 @@ function verify_user_input(verify_email , verify_username , verify_password1 , v
     else {
         return false;
     }
-
+    
 }
 
 function register_new_user(req,res){
