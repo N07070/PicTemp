@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>N07070's photo app</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,25 +39,16 @@
             </div>
           </nav>
         <main>
-          <!--ul ng-controller="ImagesCtrl as test">
-            <li ng-repeat="image in test.images">
-              <div>
-                <img style="height:200px; width: auto; clear:both;" ng-src="http://localhost:3000/images/{{image.filename}}">
-              </div>
-            </li>
-          </ul-->
               <div class="image-border" ng-controller="ImagesCtrl as test">
                 <img class="img-responsive image-display" src="images/{{test.image.filename}}">
               </div>
           <!--  Make a bar that stays at the bottom of the page.-->
           <section id="upload">
-                <p>
                     <form action="/upload" method="post" enctype="multipart/form-data">
                         <label for="file">Select an image:</label>
                         <input class="btn btn-primary" type="file" name="file" id="file" />
-                        <button class="btn btn-primary"type="submit">Upload</button>
+                        <button class="btn btn-primary" type="submit">Upload</button>
                     </form>
-                </p>
           </section>
         </main>
       </body>
