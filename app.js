@@ -1,10 +1,11 @@
 //Define variables & dependencies
+
 //Dependencies
 var path = require('path');
 var flash = require('connect-flash');
 var passport = require('passport');
 
-var birds = require('./controllers/router_1');
+// Load the controller
 var index = require('./controllers/index');
 
 // Load express 4 dependencies
@@ -39,7 +40,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.engine('html', require('ejs').renderFile);
 
-app.use('/birds', birds);
 app.use('/', index);
 
 //Start the server

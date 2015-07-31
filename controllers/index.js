@@ -16,7 +16,7 @@ var mysql = require('mysql');
 var moment = require('moment');
 var validator = require('validator');
 var bcrypt = require('bcrypt');
-
+var bodyParser = require('body-parser');
 // Global variables
 
 //Constants
@@ -29,9 +29,9 @@ var users = [
   , { id: 2, username: 'jane', password: 'jane123' } // Hash passwords !
 ];
 
+router.use(bodyParser.urlencoded({ extended: true }));
+
 // Functions
-
-
 function verify_user_input(verify_email , verify_username , verify_password1 , verify_password2 , verify_age ){
 
     // With the validator module, check each user input.
@@ -182,7 +182,6 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
     findById(id, function (err, user) {
-        console.log(user);
     done(err, user);
   });
 });
@@ -216,16 +215,21 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 	res.render('index');
 });
 
+router.get('/about', function(req, res) {
+  res.send('About page. Hey, it\'s a WIP.');
+});
+
 router.post('/upload', ensureAuthenticated, function(req, res, next) {
 	var is;
     var os;
     var targetPath;
     var targetName;
+    console.log(req.files);
     var tempPath = req.files.file.path;
     //get the mime type of the file
-    var type = mime.lookup(req.files.file.path);
+    var type = mime.lookup(tempPath);
     //get the extenstion of the file
-    var extension = req.files.file.path.split(/[. ]+/).pop();
+    var extension = tempPath.split(/[. ]+/).pop();
 
     //check to see if we support the file type
     if (IMAGE_TYPES.indexOf(type) == -1) {
