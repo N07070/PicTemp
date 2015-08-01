@@ -6,7 +6,7 @@ var fs = require('fs');
 var path = require('path');
 var uid = require('uid2');
 var mime = require('mime');
-var walk    = require('walk');
+var walk = require('walk');
 var passport = require('passport');
 var flash = require('connect-flash');
 var LocalStrategy = require('passport-local').Strategy;
@@ -21,7 +21,7 @@ var multer = require('multer');
 // Global variables
 
 //Constants
-var TARGET_PATH = path.resolve(path.join(__dirname, './writable/'));
+var TARGET_PATH = path.resolve(path.join(__dirname, '/writable/'));
 var IMAGE_TYPES = ['image/jpeg', 'image/png'];
 
 // Change this to a database to be able to add users
@@ -225,47 +225,63 @@ router.post('/upload', ensureAuthenticated, function(req, res, next) {
     var os;
     var targetPath;
     var targetName;
-    console.log(req.files);
-    var tempPath = req.files.file.path;
+    var tempPath = req.file.path;
+
     //get the mime type of the file
-    var type = mime.lookup(tempPath);
-    //get the extenstion of the file
-    var extension = tempPath.split(/[. ]+/).pop();
+    var type = req.file.mimetype;
 
     //check to see if we support the file type
     if (IMAGE_TYPES.indexOf(type) == -1) {
-      return res.send(415, 'Supported image formats: jpeg, jpg, jpe, png.');
+      return res.status(415).send('Supported image formats: jpeg, jpg, jpe, png.');
     }
 
+    // from the extension of the file, define the extension of the file.
+    if (type === 'image/png') {
+        extension = "png";
+    } else if (type === 'image/jpeg') {
+        extension = "jpg";
+    }
+
+    console.log('1');
     //create a new name for the image
     targetName = uid(22) + '.' + extension;
 
     //determine the new path to save the image
     targetPath = path.join(TARGET_PATH, targetName);
+    console.log('2');
 
     //create a read stream in order to read the file
     is = fs.createReadStream(tempPath);
+    console.log('3');
+
 
     //create a write stream in order to write the a new file
     os = fs.createWriteStream(targetPath);
+    console.log('4');
+
 
     is.pipe(os);
+    console.log('5');
 
     //handle error
     is.on('error', function() {
       if (err) {
-        return res.send(500, 'Something went wrong');
+        return res.status(500).send('Something went wrong');
       }
     });
+    console.log('6');
 
     //if we are done moving the file
     is.on('end', function() {
+    console.log('7');
+
 
       //delete file from temp folder
       fs.unlink(tempPath, function(err) {
         if (err) {
-          return res.send(500, 'Something went wrong');
+            return res.status(500).send('Something went wrong');
         }
+        console.log('8');
 
         //send something nice to user
         res.render('image', {
@@ -273,6 +289,7 @@ router.post('/upload', ensureAuthenticated, function(req, res, next) {
           type: type,
           extension: extension
         });
+        console.log('9');
 
       });//#end - unlink
     });//#end - on.end
