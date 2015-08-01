@@ -3,7 +3,7 @@
 * Finish the user registration :white_check_mark:
 * Finish the user authentification
 * Finish the image insert in databse
-* Finish the image recuperation
+* Finish the image recuperation :white_check_mark:
 * Create a way to dispo the images in differents flows, moderators and let users create flows.
 * Finish the task to check the age of the image + delete it
 * Find a way to display the error to the user in case something brakes.
