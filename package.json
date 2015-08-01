@@ -17,6 +17,7 @@
     "mime": "latest",
     "moment": "^2.10.6",
     "morgan": "^1.6.1",
+    "multer": "^1.0.1",
     "mysql": "^2.8.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
