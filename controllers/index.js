@@ -17,6 +17,7 @@ var moment = require('moment');
 var validator = require('validator');
 var bcrypt = require('bcrypt');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 // Global variables
 
 //Constants
