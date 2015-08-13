@@ -15,6 +15,7 @@ var session = require('express-session');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
+var multer = require('multer');
 var router = express.Router();
 
 var app = express();
@@ -34,6 +35,8 @@ app.use(methodOverride());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/images', express.static(path.join(__dirname, '/writable')));
 app.use('/assets', express.static(path.join(__dirname, '/assets')));
+app.use(multer({dest:'./writable/'}).single('file'));
+
 
 app.use(flash());
 app.use(passport.initialize());

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>N07070's photo app</title>
+        <title>-</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,12 +11,16 @@
         <link rel="stylesheet" href="assets/css/main.css">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
-        <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="js/jquery-1.11.2.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
         <script src="assets/carousel.js"></script>
+        <script>
+        setInterval(function(){
+            $(location).attr('href','/');
+        }, 2000);
+        </script>
     </head>
   <body>
       <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -42,8 +46,8 @@
       <h1>The image was uploaded !</h1>
     </header>
     <main>
-      <section id="upload">
-        <img class="uploaded-image  img-responsive img-thumbnail" src="/images/<%= name %>" alt="Image name: <%= name %>"/>
+      <section id="upload" class="image-border">
+        <img class="uploaded-image  img-responsive image-display" src="/images/<%= name %>" alt="Image name: <%= name %>"/>
       </section>
     </main>
   </body>
